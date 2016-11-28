@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -119,3 +120,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# YouTube API Developer key
+
+if DEBUG:
+    secret_file = os.path.join(BASE_DIR, 'config.json')
+else:
+    secret_file = os.path.join(BASE_DIR, 'config.json')
+with open(secret_file) as f:
+    SECRETS = json.load(f)
+secret = lambda n: str(SECRETS[n])
+YOUTUBE_DEVELOPER_KEY = secret('YOUTUBE_DEVELOPER_KEY')
